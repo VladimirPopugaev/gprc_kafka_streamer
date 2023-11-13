@@ -1,0 +1,15 @@
+syntax = "proto3";
+package kafka_streamer;
+
+option go_package = "/v1/service";
+
+service KafkaStreamer {
+  rpc CreateChannel(CreateChannelRequest) returns (CreateChannelResponse) {}
+}
+
+message CreateChannelRequest {
+  string topic = 1;
+}
+
+message CreateChannelResponse {
+}

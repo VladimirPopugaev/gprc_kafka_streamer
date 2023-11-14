@@ -9,9 +9,14 @@ import (
 type Config struct {
 	Env    string `yaml:"env"`
 	Server Server `yaml:"server"`
+	Broker Broker `yaml:"broker"`
 }
 
 type Server struct {
+	Address string `yaml:"address"`
+}
+
+type Broker struct {
 	Address string `yaml:"address"`
 }
 

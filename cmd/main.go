@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"gprc_kafka_streamer/internal/app"
+	kf "gprc_kafka_streamer/internal/broker/kafka"
 	"gprc_kafka_streamer/pkg/config"
 	sl "gprc_kafka_streamer/pkg/logger"
 	"gprc_kafka_streamer/proto/v1/service"
@@ -32,10 +33,15 @@ func main() {
 	if err != nil {
 		log.Fatalf("Logger is not created. Error: %s", err)
 	}
-	_ = logger //TODO: remove this line
+
+	// Create kafka client
+	broker, err := kf.New(ctx, cfg.Broker.Address)
+	if err != nil {
+		log.Fatalf("Kafka client is not created. Error: %s", err)
+	}
 
 	// create service
-	srv := &app.GRPCServer{}
+	srv := app.NewServer(broker, logger)
 
 	// start service
 	s := grpc.NewServer()
